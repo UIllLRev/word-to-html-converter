@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordToHtmlConverter", "WordToHtmlConverter\WordToHtmlConverter.csproj", "{D9B5CAF6-6EB3-43D6-9F33-0C4B6CD4EE2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentFormat.OpenXml", "..\..\..\Documents\GitHub\Open-XML-SDK\DocumentFormat.OpenXml\DocumentFormat.OpenXml.csproj", "{E5D39C6A-9067-477E-B0D3-A9419B86E6E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenXmlPowerTools", "..\..\..\Documents\GitHub\Open-Xml-PowerTools\OpenXmlPowerTools\OpenXmlPowerTools.csproj", "{6F957FF3-AFCC-4D69-8FBC-71AE21BC45C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.IO.Packaging", "..\..\..\Documents\GitHub\Open-XML-SDK\System.IO.Packaging\System.IO.Packaging.csproj", "{4C88A3AD-1241-4A04-854B-8372DF29828D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9B5CAF6-6EB3-43D6-9F33-0C4B6CD4EE2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9B5CAF6-6EB3-43D6-9F33-0C4B6CD4EE2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9B5CAF6-6EB3-43D6-9F33-0C4B6CD4EE2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9B5CAF6-6EB3-43D6-9F33-0C4B6CD4EE2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5D39C6A-9067-477E-B0D3-A9419B86E6E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5D39C6A-9067-477E-B0D3-A9419B86E6E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5D39C6A-9067-477E-B0D3-A9419B86E6E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5D39C6A-9067-477E-B0D3-A9419B86E6E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F957FF3-AFCC-4D69-8FBC-71AE21BC45C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F957FF3-AFCC-4D69-8FBC-71AE21BC45C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F957FF3-AFCC-4D69-8FBC-71AE21BC45C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F957FF3-AFCC-4D69-8FBC-71AE21BC45C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C88A3AD-1241-4A04-854B-8372DF29828D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C88A3AD-1241-4A04-854B-8372DF29828D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C88A3AD-1241-4A04-854B-8372DF29828D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C88A3AD-1241-4A04-854B-8372DF29828D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
