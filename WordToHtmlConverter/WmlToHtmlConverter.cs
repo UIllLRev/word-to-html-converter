@@ -42,6 +42,7 @@ Version: 2.6.00
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Globalization;
@@ -173,6 +174,10 @@ namespace WordToHtmlConverter
 
     public static class WmlToHtmlConverter
     {
+        // your shoe's untied
+        private static Hashtable footnoteMap = new Hashtable();
+        private static int maxFootnote = 0;
+
         public static XElement ConvertToHtml(WmlDocument doc, WmlToHtmlConverterSettings htmlConverterSettings)
         {
             using (OpenXmlMemoryStreamDocument streamDoc = new OpenXmlMemoryStreamDocument(doc))
@@ -568,9 +573,21 @@ namespace WordToHtmlConverter
 
             if (element.Name == W.footnoteReference)
             {
+                string id = "XXX";
+                if (element.Attribute(W.customMarkFollows).ToBoolean().GetValueOrDefault())
+                {
+                    // Ideally we would actually look at the next text run to get this
+                        id = "*";
+                }
+                else
+                {
+                    id = (++maxFootnote).ToString();
+                }
+                footnoteMap.Add(element.Attribute(W.id).Value, id);
+
                 return new XElement(Xhtml.a,
-                    new XAttribute("href", "#fn-" + (string)element.Attribute(W.id)),
-                    new XElement(Xhtml.sup, new XText((string)element.Attribute(W.id)))
+                    new XAttribute("href", "#fn-" + id),
+                    new XElement(Xhtml.sup, new XText(id))
                     );
             }
 
@@ -598,9 +615,14 @@ namespace WordToHtmlConverter
             // there but possibly empty), and other meta tags.
             if (element.Name == W.footnotes)
             {
+                List<object> subelements = new List<object>();
+                foreach (XElement e in element.Elements())
+                {
+                    subelements.Add(ConvertToHtmlFootnoteTransform(wordDoc, settings, e, false, currentMarginLeft, (string)footnoteMap[e.Attribute(W.id).Value]));
+                }
                 return new XElement(Xhtml.div,
-                    element.Elements()
-                        .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, false, currentMarginLeft)));
+                    subelements.ToArray()
+                    );
             }
 
             // Transform the w:p element to the XHTML h:h1-h6 or h:p element (if the previous paragraph does not
@@ -692,9 +714,9 @@ namespace WordToHtmlConverter
             {
                 return new XElement(Xhtml.p,
                     new XElement(Xhtml.a,
-                        new XAttribute("id", "fn-" + (string)element.Attribute(W.id)),
+                        new XAttribute("id", "fn-" + footnoteId),
                         element.Elements()
-                        .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, suppressTrailingWhiteSpace, currentMarginLeft, (string)element.Attribute(W.id)))
+                        .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, suppressTrailingWhiteSpace, currentMarginLeft, footnoteId))
                         )
                 );
             }
