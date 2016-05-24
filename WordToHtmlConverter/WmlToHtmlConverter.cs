@@ -1662,6 +1662,18 @@ namespace WordToHtmlConverter
             var style = DefineRunStyle(run);
             object content = run.Elements().Select(e => ConvertToHtmlTransform(wordDoc, settings, e, false, 0m, footnoteId));
 
+            // W.u
+            if (rPr.Element(W.u) != null && (string)rPr.Elements(W.u).Attributes(W.val).FirstOrDefault() != "none")
+                content = new XElement(Xhtml.u, content);
+
+            // W.i
+            if (GetBoolProp(rPr, W.i))
+                content = new XElement(Xhtml.i, content);
+
+            // W.b
+            if (GetBoolProp(rPr, W.b))
+                content = new XElement(Xhtml.b, content);
+
             // Wrap content in h:sup or h:sub elements as necessary.
             if (rPr.Element(W.vertAlign) != null)
             {
@@ -1776,16 +1788,6 @@ namespace WordToHtmlConverter
             // W.vanish
             if (GetBoolProp(rPr, W.vanish) && !GetBoolProp(rPr, W.specVanish))
                 style.AddIfMissing("display", "none");
-
-            // W.u
-            if (rPr.Element(W.u) != null && (string) rPr.Elements(W.u).Attributes(W.val).FirstOrDefault() != "none")
-                style.AddIfMissing("text-decoration", "underline");
-
-            // W.i
-            style.AddIfMissing("font-style", GetBoolProp(rPr, W.i) ? "italic" : "normal");
-
-            // W.b
-            style.AddIfMissing("font-weight", GetBoolProp(rPr, W.b) ? "bold" : "normal");
 
             // W.strike
             if (GetBoolProp(rPr, W.strike) || GetBoolProp(rPr, W.dstrike))
