@@ -713,11 +713,9 @@ namespace WordToHtmlConverter
             if (element.Name == W.footnote)
             {
                 return new XElement(Xhtml.p,
-                    new XElement(Xhtml.a,
-                        new XAttribute("id", "fn-" + footnoteId),
-                        element.Elements()
-                        .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, suppressTrailingWhiteSpace, currentMarginLeft, footnoteId))
-                        )
+                    new XElement(Xhtml.a, new XAttribute("id", "fn-" + footnoteId)),
+                    element.Elements()
+                    .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, suppressTrailingWhiteSpace, currentMarginLeft, footnoteId))
                 );
             }
             // Ignore element.
