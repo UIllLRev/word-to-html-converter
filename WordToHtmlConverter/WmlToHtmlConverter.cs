@@ -721,7 +721,7 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
             if (element.Name == W.footnote)
             {
                 return new XElement(Xhtml.p,
-                    new XElement(Xhtml.a, new XAttribute("id", "fn-" + footnoteId)),
+                    new XElement(Xhtml.a, new XAttribute("id", "fn-" + footnoteId), new XText(" ")),
                     element.Elements()
                     .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, suppressTrailingWhiteSpace, currentMarginLeft, footnoteId))
                 );
