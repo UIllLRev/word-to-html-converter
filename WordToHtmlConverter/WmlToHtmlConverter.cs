@@ -1476,10 +1476,10 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
             // vertical text alignment as of December 2013 does not work in any major browsers.
             CreateStyleFromTextAlignment(style, pPr.Element(W.textAlignment));
 
-            style.AddIfMissing("margin-top", "0");
+            /*style.AddIfMissing("margin-top", "0");
             style.AddIfMissing("margin-left", "0");
             style.AddIfMissing("margin-right", "0");
-            style.AddIfMissing("margin-bottom", ".001pt");
+            style.AddIfMissing("margin-bottom", ".001pt");*/
 
             return style;
         }
