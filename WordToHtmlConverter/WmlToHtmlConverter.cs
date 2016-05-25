@@ -3290,6 +3290,7 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
             { "Lucida Fax", @"'{0}', 'serif'" },
             { "Palatino Linotype", @"'{0}', 'serif'" },
             { "Times New Roman", @"'{0}', 'serif'" },
+            { "Times Ten Roman", @"'{0}', 'serif'" },
             { "Wide Latin", @"'{0}', 'serif'" },
             { "Courier New", @"'{0}'" },
             { "Lucida Console", @"'{0}'" },
