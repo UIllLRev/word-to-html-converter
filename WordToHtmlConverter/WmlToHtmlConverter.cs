@@ -97,7 +97,7 @@ namespace WordToHtmlConverter
             CssClassPrefix = "pt-";
             FabricateCssClasses = true;
             GeneralCss = @"
-sup { vertical-align: baseline; position: relative; top: -0.4em;f }
+sup { vertical-align: baseline; position: relative; top: -0.4em; }
 .post p {overflow: visible;}";
             AdditionalCss = "";
             RestrictToSupportedLanguages = false;
