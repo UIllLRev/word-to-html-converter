@@ -1774,6 +1774,8 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
             // W.sz
             var languageType = (string)run.Attribute(PtOpenXml.LanguageType);
             var sz = GetFontSize(languageType, rPr);
+            if (sz < 16.0m)
+                sz = 16.0m;
             if (sz != null)
                 style.AddIfMissing("font-size", string.Format(NumberFormatInfo.InvariantInfo, "{0}pt", sz/2.0m));
 
