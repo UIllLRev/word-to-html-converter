@@ -1668,8 +1668,16 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
                 return null;
 
             var style = DefineRunStyle(run);
-            object content = run.Elements().Select(e => ConvertToHtmlTransform(wordDoc, settings, e, false, 0m, footnoteId));
+            var result = run.Elements().Select(e => ConvertToHtmlTransform(wordDoc, settings, e, false, 0m, footnoteId)).Where(e =>
+            {
+                return e != null;
+            });
 
+            if (result.Count() == 0)
+                return null;
+
+            object content = result;
+            
             // W.u
             if (rPr.Element(W.u) != null && (string)rPr.Elements(W.u).Attributes(W.val).FirstOrDefault() != "none")
                 content = new XElement(Xhtml.u, content);
