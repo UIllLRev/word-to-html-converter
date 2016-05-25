@@ -1710,19 +1710,19 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
 
             var langAttribute = GetLangAttribute(run);
 
-            XEntity runStartMark;
-            XEntity runEndMark;
-            DetermineRunMarks(run, rPr, style, out runStartMark, out runEndMark);
+            //XEntity runStartMark;
+            //XEntity runEndMark;
+            //DetermineRunMarks(run, rPr, style, out runStartMark, out runEndMark);
 
-            if (style.Any() || langAttribute != null || runStartMark != null)
+            if (style.Any() || langAttribute != null /*|| runStartMark != null*/)
             {
-                style.AddIfMissing("margin", "0");
-                style.AddIfMissing("padding", "0");
+                //style.AddIfMissing("margin", "0");
+                //style.AddIfMissing("padding", "0");
                 var xe = new XElement(Xhtml.span,
                     langAttribute,
-                    runStartMark,
-                    content,
-                    runEndMark);
+                    //runStartMark,
+                    content//,
+                    /*runEndMark*/);
 
                 xe.AddAnnotation(style);
                 content = xe;
