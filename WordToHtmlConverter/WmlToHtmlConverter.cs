@@ -96,7 +96,9 @@ namespace WordToHtmlConverter
             PageTitle = "";
             CssClassPrefix = "pt-";
             FabricateCssClasses = true;
-            GeneralCss = "span { white-space: pre-wrap; }";
+            GeneralCss = @"
+sup { vertical-align: baseline; position: relative; top: -0.4em;f }
+.post p {overflow: visible;}";
             AdditionalCss = "";
             RestrictToSupportedLanguages = false;
             RestrictToSupportedNumberingFormats = false;
@@ -135,7 +137,7 @@ namespace WordToHtmlConverter
             PageTitle = "";
             CssClassPrefix = "pt-";
             FabricateCssClasses = true;
-            GeneralCss = "span { white-space: pre-wrap; }";
+            GeneralCss = "";
             AdditionalCss = "";
             RestrictToSupportedLanguages = false;
             RestrictToSupportedNumberingFormats = false;
