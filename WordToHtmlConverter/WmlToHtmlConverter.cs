@@ -762,7 +762,7 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
         private static object ProcessTab(XElement element)
         {
             var tabWidthAtt = element.Attribute(PtOpenXml.TabWidth);
-            if (tabWidthAtt == null) return null;
+            if (tabWidthAtt == null) return new XText(" ");
 
             var leader = (string) element.Attribute(PtOpenXml.Leader);
             var tabWidth = (decimal) tabWidthAtt;
