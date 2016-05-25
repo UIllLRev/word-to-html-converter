@@ -246,7 +246,8 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
 
             rootElement = wordDoc.MainDocumentPart.FootnotesPart.GetXDocument().Root;
             XElement footnoteHtml = (XElement)ConvertToHtmlFootnoteTransform(wordDoc, htmlConverterSettings, rootElement, false, 0m);
-            xhtml.Add(footnoteHtml);
+            xhtml.Element(Xhtml.body).Add(new XElement(Xhtml.xhtml + "hr"));
+            xhtml.Element(Xhtml.body).Add(footnoteHtml);
 
             ReifyStylesAndClasses(htmlConverterSettings, xhtml);
 
