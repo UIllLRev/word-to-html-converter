@@ -1471,7 +1471,7 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
                 CreateFontCssProperty(font, style);
 
             DefineFontSize(style, paragraph);
-            DefineLineHeight(style, paragraph);
+            //DefineLineHeight(style, paragraph);
 
             // vertical text alignment as of December 2013 does not work in any major browsers.
             CreateStyleFromTextAlignment(style, pPr.Element(W.textAlignment));
