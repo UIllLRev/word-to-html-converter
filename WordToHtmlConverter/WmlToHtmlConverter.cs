@@ -577,16 +577,21 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
             if (element.Name == W.footnoteReference)
             {
                 string id = "XXX";
-                if (element.Attribute(W.customMarkFollows).ToBoolean().GetValueOrDefault())
+                if (footnoteMap.Contains(element.Attribute(W.id).Value))
                 {
-                    // Ideally we would actually look at the next text run to get this
-                        id = "*";
+                    id = (string)footnoteMap[element.Attribute(W.id).Value];
+                }
+                else if (element.Attribute(W.customMarkFollows).ToBoolean().GetValueOrDefault())
+                {
+                    // Ideally we would actually look at the next text run for this
+                    id = "*";
+                    footnoteMap.Add(element.Attribute(W.id).Value, id);
                 }
                 else
                 {
                     id = (++maxFootnote).ToString();
-                }
-                footnoteMap.Add(element.Attribute(W.id).Value, id);
+                    footnoteMap.Add(element.Attribute(W.id).Value, id);
+                }               
 
                 return new XElement(Xhtml.a,
                     new XAttribute("href", "#fn-" + id),
