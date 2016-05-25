@@ -527,10 +527,10 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
             }
 
             // Transform w:br to h:br.
-            if (element.Name == W.br || element.Name == W.cr)
+            /*if (element.Name == W.br || element.Name == W.cr)
             {
                 return ProcessBreak(element);
-            }
+            }*/
 
             // Transform w:noBreakHyphen to '-'
             if (element.Name == W.noBreakHyphen)
