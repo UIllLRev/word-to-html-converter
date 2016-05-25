@@ -918,12 +918,12 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
             // invalid in HTML5.
             paragraph.Elements(Xhtml.span).Where(e => e.IsEmpty).Remove();
 
-            foreach (var span in paragraph.Elements(Xhtml.span).ToList())
+            /*foreach (var span in paragraph.Elements(Xhtml.span).ToList())
             {
                 var v = span.Value;
                 if (v.Length > 0 && (char.IsWhiteSpace(v[0]) || char.IsWhiteSpace(v[v.Length - 1])) && span.Attribute(XNamespace.Xml + "space") == null)
                     span.Add(new XAttribute(XNamespace.Xml + "space", "preserve"));
-            }
+            }*/
 
             while (HasStyleSeparator(element))
             {
