@@ -846,7 +846,7 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
 #else
                 span = new XElement(Xhtml.span, new XEntity("#x00a0"));
 #endif
-                style.Add("margin", string.Format(NumberFormatInfo.InvariantInfo, "0 0 0 {0:0.00}in", tabWidth));
+                //style.Add("margin", string.Format(NumberFormatInfo.InvariantInfo, "0 0 0 {0:0.00}in", tabWidth));
                 style.Add("padding", "0 0 0 0");
             }
             span.AddAnnotation(style);
