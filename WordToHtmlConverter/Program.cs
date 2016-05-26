@@ -19,8 +19,11 @@ namespace WordToHtmlConverter
             WmlToHtmlConverterSettings settings = new WmlToHtmlConverterSettings();
             XElement e = WmlToHtmlConverter.ConvertToHtml(new WmlDocument(args[0]), settings);
 
-            XmlWriter writer = XmlWriter.Create(args[1]);
-            e.WriteTo(writer);
+            XmlWriterSettings s = new XmlWriterSettings();
+            s.OmitXmlDeclaration = true;
+            s.Encoding = new System.Text.UTF8Encoding(false);
+            XmlWriter writer = XmlWriter.Create(args[1], s);
+            e.Element(Xhtml.body).WriteTo(writer);
             writer.Close();
         }
     }
