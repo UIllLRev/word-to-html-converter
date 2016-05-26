@@ -412,10 +412,10 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
                 styleElement.Value = styleValue;
             else
             {
-                styleElement = new XElement(Xhtml.style, styleValue);
-                var head = xhtml.Element(Xhtml.head);
-                if (head != null)
-                    head.Add(styleElement);
+                styleElement = new XElement(Xhtml.style, new XAttribute(XhtmlNoNamespace.xhtml + "scoped", ""), styleValue);
+                var body = xhtml.Element(Xhtml.body);
+                if (body != null)
+                    body.AddFirst(styleElement);
             }
         }
 
