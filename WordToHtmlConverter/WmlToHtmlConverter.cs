@@ -806,7 +806,7 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
                     if (numberOfLeaderChars < 0)
                         numberOfLeaderChars = 0;
                     span = new XElement(Xhtml.span,
-                        new XAttribute(XNamespace.Xml + "space", "preserve"),
+                        //new XAttribute(XNamespace.Xml + "space", "preserve"),
                         " " + "".PadRight(numberOfLeaderChars, leaderChar[0]) + " ");
                     style.Add("margin", "0 0 0 0");
                     style.Add("padding", "0 0 0 0");
@@ -817,7 +817,7 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
                 }
                 else
                 {
-                    span = new XElement(Xhtml.span, new XAttribute(XNamespace.Xml + "space", "preserve"), " ");
+                    span = new XElement(Xhtml.span/*, new XAttribute(XNamespace.Xml + "space", "preserve")*/, " ");
                     style.Add("margin", "0 0 0 0");
                     style.Add("padding", "0 0 0 0");
                     style.Add("width", string.Format(NumberFormatInfo.InvariantInfo, "{0:0.00}in", tabWidth));
@@ -935,8 +935,8 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
                 var span = (XElement)ConvertParagraph(wordDoc, settings, element, elementName,
                     suppressTrailingWhiteSpace, currentMarginLeft, isBidi);
                 var v = span.Value;
-                if (v.Length > 0 && (char.IsWhiteSpace(v[0]) || char.IsWhiteSpace(v[v.Length - 1])) && span.Attribute(XNamespace.Xml + "space") == null)
-                    span.Add(new XAttribute(XNamespace.Xml + "space", "preserve"));
+                /*if (v.Length > 0 && (char.IsWhiteSpace(v[0]) || char.IsWhiteSpace(v[v.Length - 1])) && span.Attribute(XNamespace.Xml + "space") == null)
+                    span.Add(new XAttribute(XNamespace.Xml + "space", "preserve"));*/
                 paragraph.Add(span);
             }
 
@@ -966,12 +966,12 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
             // invalid in HTML5.
             paragraph.Elements(Xhtml.span).Where(e => e.IsEmpty).Remove();
 
-            foreach (var span in paragraph.Elements(Xhtml.span).ToList())
+            /*foreach (var span in paragraph.Elements(Xhtml.span).ToList())
             {
                 var v = span.Value;
                 if (v.Length > 0 && (char.IsWhiteSpace(v[0]) || char.IsWhiteSpace(v[v.Length - 1])) && span.Attribute(XNamespace.Xml + "space") == null)
                     span.Add(new XAttribute(XNamespace.Xml + "space", "preserve"));
-            }
+            }*/
 
             while (HasStyleSeparator(element))
             {
@@ -983,8 +983,8 @@ sup { vertical-align: baseline; position: relative; top: -0.4em; }
                 var span = (XElement)ConvertFootnoteParagraph(wordDoc, settings, element, elementName,
                     suppressTrailingWhiteSpace, currentMarginLeft, isBidi, footnoteId);
                 var v = span.Value;
-                if (v.Length > 0 && (char.IsWhiteSpace(v[0]) || char.IsWhiteSpace(v[v.Length - 1])) && span.Attribute(XNamespace.Xml + "space") == null)
-                    span.Add(new XAttribute(XNamespace.Xml + "space", "preserve"));
+                /*if (v.Length > 0 && (char.IsWhiteSpace(v[0]) || char.IsWhiteSpace(v[v.Length - 1])) && span.Attribute(XNamespace.Xml + "space") == null)
+                    span.Add(new XAttribute(XNamespace.Xml + "space", "preserve"));*/
                 paragraph.Add(span);
             }
 
