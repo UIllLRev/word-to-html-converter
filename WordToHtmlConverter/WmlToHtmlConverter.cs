@@ -98,7 +98,8 @@ namespace WordToHtmlConverter
             FabricateCssClasses = true;
             GeneralCss = @"
 sup { vertical-align: baseline; position: relative; top: -0.4em; }
-.post p {overflow: visible;}";
+p.pt-Document {overflow: visible;}
+p.pt-Abstract {overflow: visible;}";
             AdditionalCss = "";
             RestrictToSupportedLanguages = false;
             RestrictToSupportedNumberingFormats = false;
