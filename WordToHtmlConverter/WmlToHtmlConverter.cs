@@ -575,31 +575,7 @@ p.pt-Abstract {overflow: visible;}";
                 return CreateBorderDivs(wordDoc, settings, element.Elements());
             }
 
-            if (element.Name == W.footnoteReference)
-            {
-                string id = "XXX";
-                if (footnoteMap.Contains(element.Attribute(W.id).Value))
-                {
-                    id = (string)footnoteMap[element.Attribute(W.id).Value];
-                }
-                else if (element.Attribute(W.customMarkFollows).ToBoolean().GetValueOrDefault())
-                {
-                    // Ideally we would actually look at the next text run for this
-                    id = "*";
-                    footnoteMap.Add(element.Attribute(W.id).Value, id);
-                }
-                else
-                {
-                    id = (++maxFootnote).ToString();
-                    footnoteMap.Add(element.Attribute(W.id).Value, id);
-                }               
-
-                return new XElement(Xhtml.a,
-                    new XAttribute("href", "#fn-" + id),
-                    new XElement(Xhtml.sup, new XText(id))
-                    );
-            }
-
+           
             if (element.Name == W.footnoteRef)
             {
                 return new XText(footnoteId);
@@ -1669,6 +1645,42 @@ p.pt-Abstract {overflow: visible;}";
                 return null;
 
             var style = DefineRunStyle(run);
+            if (run.Elements(W.footnoteReference).Count() > 0)
+            {
+                XElement footnoteReference = run.Elements(W.footnoteReference).First();
+
+                string id = "XXX";
+                if (footnoteMap.Contains(footnoteReference.Attribute(W.id).Value))
+                {
+                    id = (string)footnoteMap[footnoteReference.Attribute(W.id).Value];
+                }
+                else if (footnoteReference.Attribute(W.customMarkFollows).ToBoolean().GetValueOrDefault())
+                {
+                    if (run.ElementsAfterSelf(W.r).Count() > 0)
+                    {
+                        XElement sibling = run.ElementsAfterSelf(W.r).Elements(W.t).First();
+                        id = sibling.Value;
+                        sibling.Remove();
+                    }
+                    else
+                    {
+                        id = "*";
+                    }
+
+                    footnoteMap.Add(footnoteReference.Attribute(W.id).Value, id);
+                }
+                else
+                {
+                    id = (++maxFootnote).ToString();
+                    footnoteMap.Add(footnoteReference.Attribute(W.id).Value, id);
+                }
+
+                return new XElement(Xhtml.a,
+                    new XAttribute("href", "#fn-" + id),
+                    new XElement(Xhtml.sup, new XText(id))
+                    );
+            }
+
             var result = run.Elements().Select(e => ConvertToHtmlTransform(wordDoc, settings, e, false, 0m, footnoteId)).Where(e =>
             {
                 return e != null;
