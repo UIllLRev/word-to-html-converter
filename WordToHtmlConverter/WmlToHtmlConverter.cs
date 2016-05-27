@@ -697,11 +697,14 @@ p.pt-Abstract {overflow: visible;}";
 
             if (element.Name == W.footnote)
             {
-                return new XElement(Xhtml.p,
-                    new XElement(Xhtml.a, new XAttribute("id", "fn-" + footnoteId), new XText(" ")),
-                    element.Elements()
-                    .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, suppressTrailingWhiteSpace, currentMarginLeft, footnoteId))
-                );
+                if (footnoteId != null)
+                {
+                    return new XElement(Xhtml.div,
+                        new XAttribute("id", "fn-" + footnoteId),
+                        element.Elements()
+                        .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, suppressTrailingWhiteSpace, currentMarginLeft, footnoteId))
+                    );
+                }
             }
             // Ignore element.
             return null;
