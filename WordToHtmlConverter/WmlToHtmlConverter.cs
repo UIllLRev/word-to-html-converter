@@ -247,8 +247,8 @@ p.pt-Abstract {overflow: visible;}";
 
             rootElement = wordDoc.MainDocumentPart.FootnotesPart.GetXDocument().Root;
             XElement footnoteHtml = (XElement)ConvertToHtmlFootnoteTransform(wordDoc, htmlConverterSettings, rootElement, false, 0m);
-            xhtml.Element(Xhtml.body).Add(new XElement(Xhtml.xhtml + "hr"));
-            xhtml.Element(Xhtml.body).Add(footnoteHtml);
+            xhtml.Element(XhtmlNoNamespace.body).Add(new XElement(XhtmlNoNamespace.xhtml + "hr"));
+            xhtml.Element(XhtmlNoNamespace.body).Add(footnoteHtml);
 
             ReifyStylesAndClasses(htmlConverterSettings, xhtml);
 
@@ -407,14 +407,14 @@ p.pt-Abstract {overflow: visible;}";
         private static void SetStyleElementValue(XElement xhtml, string styleValue)
         {
             var styleElement = xhtml
-                .Descendants(Xhtml.style)
+                .Descendants(XhtmlNoNamespace.style)
                 .FirstOrDefault();
             if (styleElement != null)
                 styleElement.Value = styleValue;
             else
             {
-                styleElement = new XElement(Xhtml.style, new XAttribute(XhtmlNoNamespace.xhtml + "scoped", ""), styleValue);
-                var body = xhtml.Element(Xhtml.body);
+                styleElement = new XElement(XhtmlNoNamespace.style, new XAttribute(XhtmlNoNamespace.xhtml + "scoped", ""), styleValue);
+                var body = xhtml.Element(XhtmlNoNamespace.body);
                 if (body != null)
                     body.AddFirst(styleElement);
             }
@@ -435,13 +435,13 @@ p.pt-Abstract {overflow: visible;}";
             // there but possibly empty), and other meta tags.
             if (element.Name == W.document)
             {
-                return new XElement(Xhtml.html,
-                    new XElement(Xhtml.head,
-                        new XElement(Xhtml.meta, new XAttribute("charset", "UTF-8")),
+                return new XElement(XhtmlNoNamespace.html,
+                    new XElement(XhtmlNoNamespace.head,
+                        new XElement(XhtmlNoNamespace.meta, new XAttribute("charset", "UTF-8")),
                         settings.PageTitle != null
-                            ? new XElement(Xhtml.title, new XText(settings.PageTitle))
-                            : new XElement(Xhtml.title, new XText(string.Empty)),
-                        new XElement(Xhtml.meta,
+                            ? new XElement(XhtmlNoNamespace.title, new XText(settings.PageTitle))
+                            : new XElement(XhtmlNoNamespace.title, new XText(string.Empty)),
+                        new XElement(XhtmlNoNamespace.meta,
                             new XAttribute("name", "Generator"),
                             new XAttribute("content", "PowerTools for Open XML"))),
                     element.Elements()
@@ -451,7 +451,7 @@ p.pt-Abstract {overflow: visible;}";
             // Transform the w:body element to the XHTML h:body element.
             if (element.Name == W.body)
             {
-                return new XElement(Xhtml.body, CreateSectionDivs(wordDoc, settings, element));
+                return new XElement(XhtmlNoNamespace.body, CreateSectionDivs(wordDoc, settings, element));
             }
 
             // Transform the w:p element to the XHTML h:h1-h6 or h:p element (if the previous paragraph does not
@@ -466,7 +466,7 @@ p.pt-Abstract {overflow: visible;}";
             {
                 try
                 {
-                    var a = new XElement(Xhtml.a,
+                    var a = new XElement(XhtmlNoNamespace.a,
                         new XAttribute("href",
                             wordDoc.MainDocumentPart
                                 .HyperlinkRelationships
@@ -518,7 +518,7 @@ p.pt-Abstract {overflow: visible;}";
             {
                 var cs = (string)element.Attribute(W._char);
                 var c = Convert.ToInt32(cs, 16);
-                return new XElement(Xhtml.span, new XEntity(string.Format("#{0}", c)));
+                return new XElement(XhtmlNoNamespace.span, new XEntity(string.Format("#{0}", c)));
             }
 
             // Transform tabs that have the pt:TabWidth attribute set
@@ -605,7 +605,7 @@ p.pt-Abstract {overflow: visible;}";
                 {
                     subelements.Add(ConvertToHtmlFootnoteTransform(wordDoc, settings, e, false, currentMarginLeft, (string)footnoteMap[e.Attribute(W.id).Value]));
                 }
-                return new XElement(Xhtml.div,
+                return new XElement(XhtmlNoNamespace.div,
                     subelements.ToArray()
                     );
             }
@@ -622,7 +622,7 @@ p.pt-Abstract {overflow: visible;}";
             {
                 try
                 {
-                    var a = new XElement(Xhtml.a,
+                    var a = new XElement(XhtmlNoNamespace.a,
                         new XAttribute("href",
                             wordDoc.MainDocumentPart.FootnotesPart
                                 .HyperlinkRelationships
@@ -674,7 +674,7 @@ p.pt-Abstract {overflow: visible;}";
             {
                 var cs = (string)element.Attribute(W._char);
                 var c = Convert.ToInt32(cs, 16);
-                return new XElement(Xhtml.span, new XEntity(string.Format("#{0}", c)));
+                return new XElement(XhtmlNoNamespace.span, new XEntity(string.Format("#{0}", c)));
             }
 
             // Transform tabs that have the pt:TabWidth attribute set
@@ -699,7 +699,7 @@ p.pt-Abstract {overflow: visible;}";
             {
                 if (footnoteId != null)
                 {
-                    return new XElement(Xhtml.div,
+                    return new XElement(XhtmlNoNamespace.div,
                         new XAttribute("id", "fn-" + footnoteId),
                         element.Elements()
                         .Select(e => ConvertToHtmlFootnoteTransform(wordDoc, settings, e, suppressTrailingWhiteSpace, currentMarginLeft, footnoteId))
@@ -713,7 +713,7 @@ p.pt-Abstract {overflow: visible;}";
         private static object ProcessHyperlinkToBookmark(WordprocessingDocument wordDoc, WmlToHtmlConverterSettings settings, XElement element)
         {
             var style = new Dictionary<string, string>();
-            var a = new XElement(Xhtml.a,
+            var a = new XElement(XhtmlNoNamespace.a,
                 new XAttribute("href", "#" + (string) element.Attribute(W.anchor)),
                 element.Elements(W.r).Select(run => ConvertRun(wordDoc, settings, run)));
             if (!a.Nodes().Any())
@@ -729,7 +729,7 @@ p.pt-Abstract {overflow: visible;}";
             if (name == null) return null;
 
             var style = new Dictionary<string, string>();
-            var a = new XElement(Xhtml.a,
+            var a = new XElement(XhtmlNoNamespace.a,
                 new XAttribute("id", name),
                 new XText(""));
             if (!a.Nodes().Any())
@@ -785,7 +785,7 @@ p.pt-Abstract {overflow: visible;}";
                     var numberOfLeaderChars = (int) (Math.Floor((tabWidth*1440)/widthOfLeaderChar));
                     if (numberOfLeaderChars < 0)
                         numberOfLeaderChars = 0;
-                    span = new XElement(Xhtml.span,
+                    span = new XElement(XhtmlNoNamespace.span,
                         //new XAttribute(XNamespace.Xml + "space", "preserve"),
                         " " + "".PadRight(numberOfLeaderChars, leaderChar[0]) + " ");
                     style.Add("margin", "0 0 0 0");
@@ -797,7 +797,7 @@ p.pt-Abstract {overflow: visible;}";
                 }
                 else
                 {
-                    span = new XElement(Xhtml.span/*, new XAttribute(XNamespace.Xml + "space", "preserve")*/, " ");
+                    span = new XElement(XhtmlNoNamespace.span/*, new XAttribute(XNamespace.Xml + "space", "preserve")*/, " ");
                     style.Add("margin", "0 0 0 0");
                     style.Add("padding", "0 0 0 0");
                     style.Add("width", string.Format(NumberFormatInfo.InvariantInfo, "{0:0.00}in", tabWidth));
@@ -820,11 +820,11 @@ p.pt-Abstract {overflow: visible;}";
                                 .FirstOrDefault();
                             var isBidi = bidi != null;
                             if (isBidi)
-                                span = new XElement(Xhtml.span, new XEntity("#x200f")); // RLM
+                                span = new XElement(XhtmlNoNamespace.span, new XEntity("#x200f")); // RLM
                             else
-                                span = new XElement(Xhtml.span, new XEntity("#x200e")); // LRM
+                                span = new XElement(XhtmlNoNamespace.span, new XEntity("#x200e")); // LRM
 #else
-                span = new XElement(Xhtml.span, new XEntity("#x00a0"));
+                span = new XElement(XhtmlNoNamespace.span, new XEntity("#x00a0"));
 #endif
                 //style.Add("margin", string.Format(NumberFormatInfo.InvariantInfo, "0 0 0 {0:0.00}in", tabWidth));
                 style.Add("padding", "0 0 0 0");
@@ -839,7 +839,7 @@ p.pt-Abstract {overflow: visible;}";
             var tabWidth = (decimal?) element.Attribute(PtOpenXml.TabWidth);
             if (tabWidth != null)
             {
-                span = new XElement(Xhtml.span);
+                span = new XElement(XhtmlNoNamespace.span);
                 span.AddAnnotation(new Dictionary<string, string>
                 {
                     { "margin", string.Format(NumberFormatInfo.InvariantInfo, "0 0 0 {0:0.00}in", tabWidth) },
@@ -855,7 +855,7 @@ p.pt-Abstract {overflow: visible;}";
 
             return new object[]
             {
-                new XElement(Xhtml.br),
+                new XElement(XhtmlNoNamespace.br),
                 zeroWidthChar,
                 span,
             };
@@ -896,9 +896,9 @@ p.pt-Abstract {overflow: visible;}";
             // The paragraph conversion might have created empty spans.
             // These can and should be removed because empty spans are
             // invalid in HTML5.
-            paragraph.Elements(Xhtml.span).Where(e => e.IsEmpty).Remove();
+            paragraph.Elements(XhtmlNoNamespace.span).Where(e => e.IsEmpty).Remove();
 
-            /*foreach (var span in paragraph.Elements(Xhtml.span).ToList())
+            /*foreach (var span in paragraph.Elements(XhtmlNoNamespace.span).ToList())
             {
                 var v = span.Value;
                 if (v.Length > 0 && (char.IsWhiteSpace(v[0]) || char.IsWhiteSpace(v[v.Length - 1])) && span.Attribute(XNamespace.Xml + "space") == null)
@@ -910,7 +910,7 @@ p.pt-Abstract {overflow: visible;}";
                 element = element.ElementsAfterSelf(W.p).FirstOrDefault();
                 if (element == null) break;
 
-                elementName = Xhtml.span;
+                elementName = XhtmlNoNamespace.span;
                 isBidi = IsBidi(element);
                 var span = (XElement)ConvertParagraph(wordDoc, settings, element, elementName,
                     suppressTrailingWhiteSpace, currentMarginLeft, isBidi);
@@ -944,9 +944,9 @@ p.pt-Abstract {overflow: visible;}";
             // The paragraph conversion might have created empty spans.
             // These can and should be removed because empty spans are
             // invalid in HTML5.
-            paragraph.Elements(Xhtml.span).Where(e => e.IsEmpty).Remove();
+            paragraph.Elements(XhtmlNoNamespace.span).Where(e => e.IsEmpty).Remove();
 
-            /*foreach (var span in paragraph.Elements(Xhtml.span).ToList())
+            /*foreach (var span in paragraph.Elements(XhtmlNoNamespace.span).ToList())
             {
                 var v = span.Value;
                 if (v.Length > 0 && (char.IsWhiteSpace(v[0]) || char.IsWhiteSpace(v[v.Length - 1])) && span.Attribute(XNamespace.Xml + "space") == null)
@@ -958,7 +958,7 @@ p.pt-Abstract {overflow: visible;}";
                 element = element.ElementsAfterSelf(W.p).FirstOrDefault();
                 if (element == null) break;
 
-                elementName = Xhtml.span;
+                elementName = XhtmlNoNamespace.span;
                 isBidi = IsBidi(element);
                 var span = (XElement)ConvertFootnoteParagraph(wordDoc, settings, element, elementName,
                     suppressTrailingWhiteSpace, currentMarginLeft, isBidi, footnoteId);
@@ -1008,7 +1008,7 @@ p.pt-Abstract {overflow: visible;}";
             }
             var tableDirection = bidiVisual != null ? new XAttribute("dir", "rtl") : new XAttribute("dir", "ltr");
             style.AddIfMissing("margin-bottom", ".001pt");
-            var table = new XElement(Xhtml.table,
+            var table = new XElement(XhtmlNoNamespace.table,
                 // TODO: Revisit and make sure the omission is covered by appropriate CSS.
                 // new XAttribute("border", "1"),
                 // new XAttribute("cellspacing", 0),
@@ -1033,7 +1033,7 @@ p.pt-Abstract {overflow: visible;}";
             {
                 jcToUse = new XAttribute("align", jc);
             }
-            var tableDiv = new XElement(Xhtml.div,
+            var tableDiv = new XElement(XhtmlNoNamespace.div,
                 dir,
                 jcToUse,
                 table);
@@ -1119,7 +1119,7 @@ p.pt-Abstract {overflow: visible;}";
             style.AddIfMissing("padding-top", "0");
             style.AddIfMissing("padding-bottom", "0");
 
-            var cell = new XElement(Xhtml.td,
+            var cell = new XElement(XhtmlNoNamespace.td,
                 rowSpan,
                 colSpan,
                 CreateBorderDivs(wordDoc, settings, element.Elements()));
@@ -1135,7 +1135,7 @@ p.pt-Abstract {overflow: visible;}";
             if (trHeight != null)
                 style.AddIfMissing("height",
                     string.Format(NumberFormatInfo.InvariantInfo, "{0:0.00}in", (decimal) trHeight/1440m));
-            var htmlRow = new XElement(Xhtml.tr,
+            var htmlRow = new XElement(XhtmlNoNamespace.tr,
                 element.Elements().Select(e => ConvertToHtmlTransform(wordDoc, settings, e, false, currentMarginLeft)));
             if (style.Any())
                 htmlRow.AddAnnotation(style);
@@ -1157,7 +1157,7 @@ p.pt-Abstract {overflow: visible;}";
 
         private static XName GetParagraphElementName(XElement element, WordprocessingDocument wordDoc)
         {
-            var elementName = Xhtml.p;
+            var elementName = XhtmlNoNamespace.p;
 
             var styleId = (string) element.Elements(W.pPr).Elements(W.pStyle).Attributes(W.val).FirstOrDefault();
             if (styleId == null) return elementName;
@@ -1169,7 +1169,7 @@ p.pt-Abstract {overflow: visible;}";
                 (int?) style.Elements(W.pPr).Elements(W.outlineLvl).Attributes(W.val).FirstOrDefault();
             if (outlineLevel != null && outlineLevel <= 5)
             {
-                elementName = Xhtml.xhtml + string.Format("h{0}", outlineLevel + 1);
+                elementName = XhtmlNoNamespace.xhtml + string.Format("h{0}", outlineLevel + 1);
             }
 
             return elementName;
@@ -1213,12 +1213,12 @@ p.pt-Abstract {overflow: visible;}";
                     }
                     if (sectPr == null || bidi == null)
                     {
-                        var div = new XElement(Xhtml.div, CreateBorderDivs(wordDoc, settings, g));
+                        var div = new XElement(XhtmlNoNamespace.div, CreateBorderDivs(wordDoc, settings, g));
                         return div;
                     }
                     else
                     {
-                        var div = new XElement(Xhtml.div,
+                        var div = new XElement(XhtmlNoNamespace.div,
                             new XAttribute("dir", "rtl"),
                             CreateBorderDivs(wordDoc, settings, g));
                         return div;
@@ -1395,7 +1395,7 @@ p.pt-Abstract {overflow: visible;}";
                 .ToList();
             if (txElementsPrecedingTab.Count > 1)
             {
-                var span = new XElement(Xhtml.span, txElementsPrecedingTab);
+                var span = new XElement(XhtmlNoNamespace.span, txElementsPrecedingTab);
                 var spanStyle = new Dictionary<string, string>
                 {
                     { "display", "inline-block" },
@@ -1470,7 +1470,7 @@ p.pt-Abstract {overflow: visible;}";
             if (ind == null) return;
 
             var left = (decimal?) ind.Attribute(W.left);
-            if (left != null && elementName != Xhtml.span)
+            if (left != null && elementName != XhtmlNoNamespace.span)
             {
                 var leftInInches = (decimal) left/1440 - currentMarginLeft;
                 style.AddIfMissing(isBidi ? "margin-right" : "margin-left",
@@ -1490,7 +1490,7 @@ p.pt-Abstract {overflow: visible;}";
             }
 
             var firstLine = (decimal?) ind.Attribute(W.firstLine);
-            if (firstLine != null && elementName != Xhtml.span)
+            if (firstLine != null && elementName != XhtmlNoNamespace.span)
             {
                 var firstLineInInches = (decimal) firstLine/1440m;
                 style.AddIfMissing("text-indent",
@@ -1498,7 +1498,7 @@ p.pt-Abstract {overflow: visible;}";
             }
 
             var hanging = (decimal?) ind.Attribute(W.hanging);
-            if (hanging != null && elementName != Xhtml.span)
+            if (hanging != null && elementName != XhtmlNoNamespace.span)
             {
                 var hangingInInches = (decimal) -hanging/1440m;
                 style.AddIfMissing("text-indent",
@@ -1528,7 +1528,7 @@ p.pt-Abstract {overflow: visible;}";
             if (spacing == null) return;
 
             var spacingBefore = (decimal?) spacing.Attribute(W.before);
-            if (spacingBefore != null && elementName != Xhtml.span)
+            if (spacingBefore != null && elementName != XhtmlNoNamespace.span)
                 style.AddIfMissing("margin-top",
                     spacingBefore > 0m
                         ? string.Format(NumberFormatInfo.InvariantInfo, "{0}pt", spacingBefore/20.0m)
@@ -1678,9 +1678,9 @@ p.pt-Abstract {overflow: visible;}";
                     footnoteMap.Add(footnoteReference.Attribute(W.id).Value, id);
                 }
 
-                return new XElement(Xhtml.a,
+                return new XElement(XhtmlNoNamespace.a,
                     new XAttribute("href", "#fn-" + id),
-                    new XElement(Xhtml.sup, new XText(id))
+                    new XElement(XhtmlNoNamespace.sup, new XText(id))
                     );
             }
 
@@ -1696,15 +1696,15 @@ p.pt-Abstract {overflow: visible;}";
             
             // W.u
             if (rPr.Element(W.u) != null && (string)rPr.Elements(W.u).Attributes(W.val).FirstOrDefault() != "none")
-                content = new XElement(Xhtml.u, content);
+                content = new XElement(XhtmlNoNamespace.u, content);
 
             // W.i
             if (GetBoolProp(rPr, W.i))
-                content = new XElement(Xhtml.i, content);
+                content = new XElement(XhtmlNoNamespace.i, content);
 
             // W.b
             if (GetBoolProp(rPr, W.b))
-                content = new XElement(Xhtml.b, content);
+                content = new XElement(XhtmlNoNamespace.b, content);
 
             // Wrap content in h:sup or h:sub elements as necessary.
             if (rPr.Element(W.vertAlign) != null)
@@ -1714,10 +1714,10 @@ p.pt-Abstract {overflow: visible;}";
                 switch (vertAlignVal)
                 {
                     case "superscript":
-                        newContent = new XElement(Xhtml.sup, content);
+                        newContent = new XElement(XhtmlNoNamespace.sup, content);
                         break;
                     case "subscript":
-                        newContent = new XElement(Xhtml.sub, content);
+                        newContent = new XElement(XhtmlNoNamespace.sub, content);
                         break;
                 }
                 if (newContent != null && newContent.Nodes().Any())
@@ -1734,7 +1734,7 @@ p.pt-Abstract {overflow: visible;}";
             {
                 //style.AddIfMissing("margin", "0");
                 //style.AddIfMissing("padding", "0");
-                var xe = new XElement(Xhtml.span,
+                var xe = new XElement(XhtmlNoNamespace.span,
                     langAttribute,
                     //runStartMark,
                     content//,
@@ -2953,7 +2953,7 @@ p.pt-Abstract {overflow: visible;}";
                                 : "0");
                     }
 
-                    var div = new XElement(Xhtml.div,
+                    var div = new XElement(XhtmlNoNamespace.div,
                         GroupAndVerticallySpaceNumberedParagraphs(wordDoc, settings, g, currentMarginLeft));
                     div.AddAnnotation(style);
                     return div;
@@ -3365,8 +3365,8 @@ p.pt-Abstract {overflow: visible;}";
 
                     var content = g.DescendantsAndSelf(W.r).Select(run => ConvertRun(wordDoc, settings, run));
                     var a = parsed.Arguments.Length > 0
-                        ? new XElement(Xhtml.a, new XAttribute("href", parsed.Arguments[0]), content)
-                        : new XElement(Xhtml.a, content);
+                        ? new XElement(XhtmlNoNamespace.a, new XAttribute("href", parsed.Arguments[0]), content)
+                        : new XElement(XhtmlNoNamespace.a, content);
                     var a2 = a as XElement;
                     if (!a2.Nodes().Any())
                     {
@@ -3407,8 +3407,8 @@ p.pt-Abstract {overflow: visible;}";
 
                     var content = g.DescendantsAndSelf(W.r).Select(run => ConvertRun(wordDoc, settings, run, footnoteId));
                     var a = parsed.Arguments.Length > 0
-                        ? new XElement(Xhtml.a, new XAttribute("href", parsed.Arguments[0]), content)
-                        : new XElement(Xhtml.a, content);
+                        ? new XElement(XhtmlNoNamespace.a, new XAttribute("href", parsed.Arguments[0]), content)
+                        : new XElement(XhtmlNoNamespace.a, content);
                     var a2 = a as XElement;
                     if (!a2.Nodes().Any())
                     {

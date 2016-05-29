@@ -20,10 +20,18 @@ namespace WordToHtmlConverter
             XElement e = WmlToHtmlConverter.ConvertToHtml(new WmlDocument(args[0]), settings);
 
             XmlWriterSettings s = new XmlWriterSettings();
+            s.ConformanceLevel = ConformanceLevel.Fragment;
             s.OmitXmlDeclaration = true;
             s.Encoding = new System.Text.UTF8Encoding(false);
             XmlWriter writer = XmlWriter.Create(args[1], s);
-            e.Element(Xhtml.body).WriteTo(writer);
+
+            writer.WriteRaw("<style scoped>");
+            writer.WriteValue(e.Element(XhtmlNoNamespace.body).Element(XhtmlNoNamespace.style).Value);
+            writer.WriteRaw("</style>");
+            foreach (XElement n in e.Element(XhtmlNoNamespace.body).Element(XhtmlNoNamespace.style).ElementsAfterSelf())
+            {
+                n.WriteTo(writer);
+            }
             writer.Close();
         }
     }
