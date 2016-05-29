@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -25,13 +26,47 @@ namespace WordToHtmlConverter
             s.Encoding = new System.Text.UTF8Encoding(false);
             XmlWriter writer = XmlWriter.Create(args[1], s);
 
+            XElement style = e.Element(XhtmlNoNamespace.body).Element(XhtmlNoNamespace.style);
+            XElement article = e.Element(XhtmlNoNamespace.body).Element(XhtmlNoNamespace.div);
+            XElement footnotes = article.ElementsAfterSelf().Last();
+
+            // The scoped attribute is a "boolean attribute," so it's not supposed to have a value.
+            // We have to write it manually to accomplish that.
             writer.WriteRaw("<style scoped>");
-            writer.WriteValue(e.Element(XhtmlNoNamespace.body).Element(XhtmlNoNamespace.style).Value);
+            writer.WriteValue(style.Value);
             writer.WriteRaw("</style>");
-            foreach (XElement n in e.Element(XhtmlNoNamespace.body).Element(XhtmlNoNamespace.style).ElementsAfterSelf())
+
+            bool wroteBreak = false;
+            writer.WriteStartElement("div");           
+            foreach (XElement n in article.Elements())
             {
+                if (!wroteBreak)
+                {
+                    if (n.Name == XhtmlNoNamespace.p && (n.Attribute("class").Value == "pt-SubHead1" || n.Attribute("class").Value == "pt-Document"))
+                    {
+                        writer.WriteStartElement("p");
+                        writer.WriteAttributeString("style", "text-align:center;");
+                        writer.WriteStartElement("a");
+                        writer.WriteAttributeString("href", "#begin");
+                        writer.WriteRaw("&#9660; Continue Reading &#9660;");
+                        writer.WriteFullEndElement();
+                        writer.WriteFullEndElement();
+                        writer.WriteStartElement("div");
+                        writer.WriteAttributeString("style", "height:50vh");
+                        writer.WriteFullEndElement();
+                        writer.WriteStartElement("p");
+                        writer.WriteAttributeString("id", "begin");
+                        writer.WriteFullEndElement();
+
+                        wroteBreak = true;
+                    }
+                }
                 n.WriteTo(writer);
             }
+            writer.WriteFullEndElement();
+
+            writer.WriteRaw("<hr>");
+            footnotes.WriteTo(writer);
             writer.Close();
         }
     }
