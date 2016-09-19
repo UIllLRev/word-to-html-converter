@@ -54,15 +54,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Documents\GitHub\Open-Xml-PowerTools\OpenXmlPowerTools\OpenXmlPowerTools.csproj">
+    <ProjectReference Include="..\Open-Xml-PowerTools\OpenXmlPowerTools\OpenXmlPowerTools.csproj">
       <Project>{6f957ff3-afcc-4d69-8fbc-71ae21bc45c9}</Project>
       <Name>OpenXmlPowerTools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Documents\GitHub\Open-XML-SDK\DocumentFormat.OpenXml\DocumentFormat.OpenXml.csproj">
+    <ProjectReference Include="..\Open-Xml-Sdk\DocumentFormat.OpenXml\DocumentFormat.OpenXml.csproj">
       <Project>{e5d39c6a-9067-477e-b0d3-a9419b86e6e5}</Project>
       <Name>DocumentFormat.OpenXml</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Documents\GitHub\Open-XML-SDK\System.IO.Packaging\System.IO.Packaging.csproj">
+    <ProjectReference Include="..\Open-Xml-Sdk\System.IO.Packaging\System.IO.Packaging.csproj">
       <Project>{4c88a3ad-1241-4a04-854b-8372df29828d}</Project>
       <Name>System.IO.Packaging</Name>
     </ProjectReference>

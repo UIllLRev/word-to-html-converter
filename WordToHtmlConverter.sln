@@ -1,15 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordToHtmlConverter", "WordToHtmlConverter\WordToHtmlConverter.csproj", "{D9B5CAF6-6EB3-43D6-9F33-0C4B6CD4EE2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentFormat.OpenXml", "..\..\..\Documents\GitHub\Open-XML-SDK\DocumentFormat.OpenXml\DocumentFormat.OpenXml.csproj", "{E5D39C6A-9067-477E-B0D3-A9419B86E6E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentFormat.OpenXml", "Open-Xml-Sdk\DocumentFormat.OpenXml\DocumentFormat.OpenXml.csproj", "{E5D39C6A-9067-477E-B0D3-A9419B86E6E5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4C88A3AD-1241-4A04-854B-8372DF29828D} = {4C88A3AD-1241-4A04-854B-8372DF29828D}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenXmlPowerTools", "..\..\..\Documents\GitHub\Open-Xml-PowerTools\OpenXmlPowerTools\OpenXmlPowerTools.csproj", "{6F957FF3-AFCC-4D69-8FBC-71AE21BC45C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenXmlPowerTools", "Open-Xml-PowerTools\OpenXmlPowerTools\OpenXmlPowerTools.csproj", "{6F957FF3-AFCC-4D69-8FBC-71AE21BC45C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E5D39C6A-9067-477E-B0D3-A9419B86E6E5} = {E5D39C6A-9067-477E-B0D3-A9419B86E6E5}
+		{4C88A3AD-1241-4A04-854B-8372DF29828D} = {4C88A3AD-1241-4A04-854B-8372DF29828D}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.IO.Packaging", "..\..\..\Documents\GitHub\Open-XML-SDK\System.IO.Packaging\System.IO.Packaging.csproj", "{4C88A3AD-1241-4A04-854B-8372DF29828D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.IO.Packaging", "Open-Xml-Sdk\System.IO.Packaging\System.IO.Packaging.csproj", "{4C88A3AD-1241-4A04-854B-8372DF29828D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
