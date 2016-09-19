@@ -1730,7 +1730,7 @@ p.pt-Abstract {overflow: visible;}";
             //XEntity runEndMark;
             //DetermineRunMarks(run, rPr, style, out runStartMark, out runEndMark);
 
-            if (style.Any() || langAttribute != null /*|| runStartMark != null*/)
+            if ((style.Any() && (string)run.Attribute("StyleName") != (string)run.ElementsBeforeSelf().LastOrDefault().Attribute("StyleName")) || langAttribute != null /*|| runStartMark != null*/)
             {
                 //style.AddIfMissing("margin", "0");
                 //style.AddIfMissing("padding", "0");
